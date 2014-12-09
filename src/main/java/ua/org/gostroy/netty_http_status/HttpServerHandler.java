@@ -8,6 +8,9 @@ import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpRequest;
+import io.netty.util.*;
+
+import java.util.concurrent.TimeUnit;
 
 import static io.netty.handler.codec.http.HttpHeaders.Names.*;
 import static io.netty.handler.codec.http.HttpHeaders.Values;
@@ -16,8 +19,9 @@ import static io.netty.handler.codec.http.HttpResponseStatus.*;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 public class HttpServerHandler extends ChannelInboundHandlerAdapter {
-    private static final byte[] CONTENT_HELLO = { 'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd' };
-    private static final byte[] CONTENT_NOT_FOUND = { 'N', 'o', 't', ' ', 'f', 'o', 'u', 'n', 'd' };
+    private static Timer timer = new HashedWheelTimer();
+    private static final String CONTENT_HELLO = "Hello World";
+    private static final String CONTENT_NOT_FOUND = "Not Found";
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) {
@@ -56,14 +60,15 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
             return;
         }
 
-        if ("/hello".equals(req.getUri())) {
-            FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(CONTENT_HELLO));
-            sendHttpResponse(ctx, req, response);
+        if ("/hello".equals(req.getUri().toLowerCase())) {
+            FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK,
+                    Unpooled.wrappedBuffer(Unpooled.copiedBuffer(CONTENT_HELLO, CharsetUtil.UTF_8)));
+            timer.newTimeout(new HelloWorldTimerTask(ctx, req, response), 10, TimeUnit.SECONDS);
             return;
         }
 
         // For all other request
-        FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, NOT_FOUND, Unpooled.wrappedBuffer(CONTENT_NOT_FOUND));
+        FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, NOT_FOUND, Unpooled.wrappedBuffer(Unpooled.copiedBuffer(CONTENT_NOT_FOUND, CharsetUtil.UTF_8)));
         sendHttpResponse(ctx, req, res);
         return;
     }
@@ -79,5 +84,25 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
             response.headers().set(CONNECTION, Values.KEEP_ALIVE);
             ctx.write(response);
         }
+    }
+
+
+    private class HelloWorldTimerTask implements TimerTask {
+        private ChannelHandlerContext ctx;
+        private HttpRequest req;
+        private FullHttpResponse response;
+
+        public HelloWorldTimerTask(ChannelHandlerContext ctx, HttpRequest req, FullHttpResponse response) {
+            this.ctx = ctx;
+            this.req = req;
+            this.response = response;
+        }
+
+        @Override
+        public void run(Timeout timeout) throws Exception {
+            sendHttpResponse(ctx, req, response);
+            ctx.flush();
+        }
+
     }
 }
