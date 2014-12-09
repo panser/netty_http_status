@@ -4,12 +4,10 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.codec.http.*;
 import io.netty.util.*;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static io.netty.handler.codec.http.HttpHeaders.Names.*;
@@ -66,10 +64,18 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
             timer.newTimeout(new HelloWorldTimerTask(ctx, req, response), 10, TimeUnit.SECONDS);
             return;
         }
+        if (req.getUri().toLowerCase().startsWith("/redirect?url=")) {
+            QueryStringDecoder qsd = new QueryStringDecoder(req.getUri());
+            List<String> redirectUrls = qsd.parameters().get("url");
+            FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, FOUND);
+            response.headers().set(LOCATION, redirectUrls);
+            sendHttpResponse(ctx, req, response);
+            return;
+        }
 
         // For all other request
-        FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, NOT_FOUND, Unpooled.wrappedBuffer(Unpooled.copiedBuffer(CONTENT_NOT_FOUND, CharsetUtil.UTF_8)));
-        sendHttpResponse(ctx, req, res);
+        FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, NOT_FOUND, Unpooled.wrappedBuffer(Unpooled.copiedBuffer(CONTENT_NOT_FOUND, CharsetUtil.UTF_8)));
+        sendHttpResponse(ctx, req, response);
         return;
     }
 
