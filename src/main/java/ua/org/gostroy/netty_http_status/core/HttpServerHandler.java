@@ -6,7 +6,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
 import io.netty.util.*;
-import ua.org.gostroy.netty_http_status.dao.RequestDao;
 import ua.org.gostroy.netty_http_status.service.StatusInfoService;
 
 import java.util.List;
@@ -60,23 +59,23 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
             return;
         }
 
-        if ("/hello".equals(req.getUri().toLowerCase())) {
+        String uri = req.getUri().toLowerCase();
+        if ("/hello".equals(uri)) {
             FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK,
                     Unpooled.wrappedBuffer(Unpooled.copiedBuffer(CONTENT_HELLO, CharsetUtil.UTF_8)));
             timer.newTimeout(new HelloWorldTimerTask(ctx, req, response), 10, TimeUnit.SECONDS);
             return;
         }
-        if (req.getUri().toLowerCase().startsWith("/redirect?url=")) {
-            QueryStringDecoder qsd = new QueryStringDecoder(req.getUri());
+        if (uri.startsWith("/redirect?url=")) {
+            QueryStringDecoder qsd = new QueryStringDecoder(uri);
             List<String> redirectUrls = qsd.parameters().get("url");
             FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, FOUND);
             response.headers().set(LOCATION, redirectUrls);
             sendHttpResponse(ctx, req, response);
             return;
         }
-        if ("/status".equals(req.getUri().toLowerCase())) {
-            RequestDao requestDao = new RequestDao();
-            StatusInfoService statusInfoService = new StatusInfoService(requestDao);
+        if ("/status".equals(uri)) {
+            StatusInfoService statusInfoService = new StatusInfoService();
 
 //            CountStatistic countStatistic = statusInfo.findCountStatistic();
 //            List<IpStatistic> ipStatistics = statusInfo.findIpStatistic();

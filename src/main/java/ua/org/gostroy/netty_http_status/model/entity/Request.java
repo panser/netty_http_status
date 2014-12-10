@@ -10,13 +10,14 @@ import java.time.LocalDateTime;
         @NamedQuery(name = "CountStatistic.find", query = "SELECT NEW ua.org.gostroy.netty_http_status.model.CountStatistic(COUNT(e.id), COUNT(DISTINCT e.ip)) FROM Request e")
         ,@NamedQuery(name = "IpStatistic.findAll", query = "SELECT e.ip, COUNT(e.id) AS count, MAX(e.time) FROM Request e GROUP BY e.ip")
         ,@NamedQuery(name = "RedirectStatistic.findAll", query = "SELECT e.redirectUrl, COUNT(e.id) AS count FROM Request e WHERE e.redirectUrl <> '' GROUP BY e.redirectUrl")
-        ,@NamedQuery(name = "RequestStatistic.findAll", query = "SELECT e.ip, e.uri, e.timestamp, e.sentBytes, e.receivedBytes FROM Request e ORDER BY e.time DESC")
+        ,@NamedQuery(name = "RequestStatistic.findAll", query = "SELECT e.ip, e.uri, e.timestamp, e.sentBytes, e.receivedBytes, e.speed FROM Request e ORDER BY e.time DESC")
 })
 @Entity
 @Table(name = "Requests")
 public class Request {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String ip;
     private String uri = "";
@@ -25,6 +26,7 @@ public class Request {
     private Long receivedBytes = 0L;
     private Long sentBytes = 0L;
     private Long timestamp;
+    private Long speed;
 
     public Long getId() {
         return id;
@@ -88,5 +90,13 @@ public class Request {
 
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Long getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(Long speed) {
+        this.speed = speed;
     }
 }

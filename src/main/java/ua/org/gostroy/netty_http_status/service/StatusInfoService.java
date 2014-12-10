@@ -17,8 +17,8 @@ public class StatusInfoService {
 
     private RequestDao requestDao;
 
-    public StatusInfoService(RequestDao requestDao) {
-        this.requestDao = requestDao;
+    public StatusInfoService() {
+        requestDao = HttpServerInitializer.requestDao;
         requestDao.setEm(HttpServerInitializer.em);
     }
 

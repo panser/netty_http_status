@@ -5,6 +5,9 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.ssl.SslContext;
+import io.netty.handler.traffic.AbstractTrafficShapingHandler;
+import ua.org.gostroy.netty_http_status.dao.RequestDao;
+import ua.org.gostroy.netty_http_status.service.RequestService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -12,6 +15,9 @@ import javax.persistence.Persistence;
 public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
 
     public static EntityManager em = Persistence.createEntityManagerFactory("netty").createEntityManager();
+    public static RequestDao requestDao = new RequestDao();
+    public static RequestService requestService = new RequestService();
+
     private final SslContext sslCtx;
 
     public HttpServerInitializer(SslContext sslCtx) {
@@ -25,6 +31,7 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
             p.addLast(sslCtx.newHandler(ch.alloc()));
         }
         p.addLast(new HttpServerCodec());
-        p.addLast("handler", new HttpServerHandler());
+        p.addLast("statisticHandler", new StatisticHandler(AbstractTrafficShapingHandler.DEFAULT_CHECK_INTERVAL));
+        p.addLast("mainHandler", new HttpServerHandler());
     }
 }

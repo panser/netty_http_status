@@ -11,8 +11,8 @@ public class RequestService {
 
     private RequestDao requestDao;
 
-    public RequestService(RequestDao requestDao) {
-        this.requestDao = requestDao;
+    public RequestService() {
+        requestDao = HttpServerInitializer.requestDao;
         requestDao.setEm(HttpServerInitializer.em);
     }
 
