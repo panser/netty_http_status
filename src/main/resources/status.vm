@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <title>Status page</title>
+    </head>
+
+    <body>
+        <h3>Total Requests: </h3>
+        <h3>Unique Ip Requests: </h3>
+        <h3>Opened Connections: </h3>
+
+        <h3>IP Statistics: </h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ip</th>
+                    <th>Count</th>
+                    <th>Last request time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Redirect Statistics: </h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Redirect Url</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <h3>Log: </h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Src_Ip</th>
+                    <th>Uri</th>
+                    <th>Timestamp(ms)</th>
+                    <th>sent_bytes</th>
+                    <th>received_bytes</th>
+                    <th>speed (bytes/sec))</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </body>
+</html>

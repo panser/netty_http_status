@@ -1,4 +1,4 @@
-package ua.org.gostroy.netty_http_status;
+package ua.org.gostroy.netty_http_status.core;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -6,6 +6,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
 import io.netty.util.*;
+import ua.org.gostroy.netty_http_status.dao.RequestDao;
+import ua.org.gostroy.netty_http_status.model.CountStatistic;
+import ua.org.gostroy.netty_http_status.service.StatusInfo;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -71,6 +74,16 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
             response.headers().set(LOCATION, redirectUrls);
             sendHttpResponse(ctx, req, response);
             return;
+        }
+        if ("/status".equals(req.getUri().toLowerCase())) {
+            RequestDao requestDao = new RequestDao();
+            StatusInfo statusInfo = new StatusInfo(requestDao);
+
+//            CountStatistic countStatistic = statusInfo.findCountStatistic();
+//            List<IpStatistic> ipStatistics = statusInfo.findIpStatistic();
+//            List<RedirectStatistic> redirectStatistics = statusInfo.findRedirectStatistic();
+//            List<RequestStatistic> requestStatistics = statusInfo.findRequestStatistic(16);
+//            return;
         }
 
         // For all other request

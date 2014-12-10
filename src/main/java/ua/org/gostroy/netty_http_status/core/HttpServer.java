@@ -1,4 +1,4 @@
-package ua.org.gostroy.netty_http_status;
+package ua.org.gostroy.netty_http_status.core;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
