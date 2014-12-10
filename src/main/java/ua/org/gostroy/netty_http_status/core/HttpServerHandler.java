@@ -7,8 +7,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
 import io.netty.util.*;
 import ua.org.gostroy.netty_http_status.dao.RequestDao;
-import ua.org.gostroy.netty_http_status.model.CountStatistic;
-import ua.org.gostroy.netty_http_status.service.StatusInfo;
+import ua.org.gostroy.netty_http_status.service.StatusInfoService;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -77,7 +76,7 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
         }
         if ("/status".equals(req.getUri().toLowerCase())) {
             RequestDao requestDao = new RequestDao();
-            StatusInfo statusInfo = new StatusInfo(requestDao);
+            StatusInfoService statusInfoService = new StatusInfoService(requestDao);
 
 //            CountStatistic countStatistic = statusInfo.findCountStatistic();
 //            List<IpStatistic> ipStatistics = statusInfo.findIpStatistic();

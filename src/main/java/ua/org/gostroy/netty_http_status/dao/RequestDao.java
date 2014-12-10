@@ -4,6 +4,7 @@ import ua.org.gostroy.netty_http_status.model.CountStatistic;
 import ua.org.gostroy.netty_http_status.model.IpStatistic;
 import ua.org.gostroy.netty_http_status.model.RedirectStatistic;
 import ua.org.gostroy.netty_http_status.model.RequestStatistic;
+import ua.org.gostroy.netty_http_status.model.entity.Request;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -18,6 +19,11 @@ public class RequestDao {
 
     public void setEm(EntityManager em) {
         this.em = em;
+    }
+
+    public Request save(Request request){
+        Request requestNew = em.merge(request);
+        return requestNew;
     }
 
     public CountStatistic findCountStatistic(){

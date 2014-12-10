@@ -13,11 +13,11 @@ import java.util.List;
 /**
  * Created by Panov Sergey on 12/10/2014.
  */
-public class StatusInfo {
+public class StatusInfoService {
 
     private RequestDao requestDao;
 
-    public StatusInfo(RequestDao requestDao) {
+    public StatusInfoService(RequestDao requestDao) {
         this.requestDao = requestDao;
         requestDao.setEm(HttpServerInitializer.em);
     }
