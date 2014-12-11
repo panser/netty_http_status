@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
  */
 @NamedQueries({
         @NamedQuery(name = "CountStatistic.find", query = "SELECT NEW ua.org.gostroy.netty_http_status.model.CountStatistic(COUNT(e.id), COUNT(DISTINCT e.ip)) FROM Request e")
-        ,@NamedQuery(name = "IpStatistic.findAll", query = "SELECT e.ip, COUNT(e.id) AS count, MAX(e.time) FROM Request e GROUP BY e.ip")
-        ,@NamedQuery(name = "RedirectStatistic.findAll", query = "SELECT e.redirectUrl, COUNT(e.id) AS count FROM Request e WHERE e.redirectUrl <> '' GROUP BY e.redirectUrl")
-        ,@NamedQuery(name = "RequestStatistic.findAll", query = "SELECT e.ip, e.uri, e.timestamp, e.sentBytes, e.receivedBytes, e.speed FROM Request e ORDER BY e.time DESC")
+        ,@NamedQuery(name = "IpStatistic.findAll", query = "SELECT NEW ua.org.gostroy.netty_http_status.model.IpStatistic(e.ip, COUNT(e.id), MAX(e.time)) FROM Request e GROUP BY e.ip")
+        ,@NamedQuery(name = "RedirectStatistic.findAll", query = "SELECT NEW ua.org.gostroy.netty_http_status.model.RedirectStatistic(e.redirectUrl, COUNT(e.id)) FROM Request e WHERE e.redirectUrl <> '' GROUP BY e.redirectUrl")
+        ,@NamedQuery(name = "RequestStatistic.findAll", query = "SELECT NEW ua.org.gostroy.netty_http_status.model.RequestStatistic(e.ip, e.uri, e.timestamp, e.sentBytes, e.receivedBytes, e.speed) FROM Request e ORDER BY e.time DESC")
 })
 @Entity
 @Table(name = "Requests")

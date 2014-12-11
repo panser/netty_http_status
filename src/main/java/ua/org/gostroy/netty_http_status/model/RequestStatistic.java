@@ -11,6 +11,15 @@ public class RequestStatistic {
     private Long receivedBytes;
     private Long speed;
 
+    public RequestStatistic(String ip, String uri, Long timestamp, Long sentBytes, Long receivedBytes, Long speed) {
+        this.ip = ip;
+        this.uri = uri;
+        this.timestamp = timestamp;
+        this.sentBytes = sentBytes;
+        this.receivedBytes = receivedBytes;
+        this.speed = speed;
+    }
+
     public String getIp() {
         return ip;
     }

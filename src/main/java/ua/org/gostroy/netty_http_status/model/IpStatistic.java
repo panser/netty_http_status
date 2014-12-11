@@ -10,6 +10,12 @@ public class IpStatistic {
     private Long count;
     private LocalDateTime time;
 
+    public IpStatistic(String ip, Long count, LocalDateTime time) {
+        this.ip = ip;
+        this.count = count;
+        this.time = time;
+    }
+
     public String getIp() {
         return ip;
     }

@@ -7,6 +7,11 @@ public class RedirectStatistic {
     private String redirectUrl;
     private Long count;
 
+    public RedirectStatistic(String redirectUrl, Long count) {
+        this.redirectUrl = redirectUrl;
+        this.count = count;
+    }
+
     public String getRedirectUrl() {
         return redirectUrl;
     }
