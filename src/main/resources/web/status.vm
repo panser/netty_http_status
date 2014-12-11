@@ -1,16 +1,36 @@
 <html>
-    <head>
-        <link rel='stylesheet' type='text/css' href='/static/bootstrap-3.3.1-dist/css/bootstrap.css'>
-        <title>Status page</title>
-    </head>
+<head>
+    <link rel='stylesheet' type='text/css' href='/static/bootstrap-3.3.1-dist/css/bootstrap.css'>
+    <title>Status page</title>
+</head>
 
-    <body>
-        <h3>Total Requests: ${countStatistic.totalRequest}</h3>
-        <h3>Unique Ip Requests: ${countStatistic.uniqRequest}</h3>
-        <h3>Opened Connections: </h3>
+<body>
+    #include("/web/include/navbar.html")
+
+    <div class="container">
+    <div class="row-fluid">
+    <div class="span12">
+
+        <h3>General Statistic: </h3>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Total Requests</th>
+                <th>Unique Ip Requests</th>
+                <th>Opened Connections</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${countStatistic.totalRequest}</td>
+                    <td>${countStatistic.uniqRequest}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
 
         <h3>IP Statistics: </h3>
-        <table>
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Ip</th>
@@ -30,7 +50,7 @@
         </table>
 
         <h3>Redirect Statistics: </h3>
-        <table>
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Redirect Url</th>
@@ -49,7 +69,7 @@
 
 
         <h3>Request Statistics: </h3>
-        <table>
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Src_Ip</th>
@@ -74,6 +94,8 @@
             </tbody>
         </table>
 
-
-    </body>
+    </div>
+    </div>
+    </div>
+</body>
 </html>
