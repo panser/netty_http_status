@@ -5,21 +5,15 @@ import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.util.CharsetUtil;
-import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import org.apache.velocity.runtime.RuntimeServices;
-import org.apache.velocity.runtime.RuntimeSingleton;
-import org.apache.velocity.runtime.parser.node.SimpleNode;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+import ua.org.gostroy.netty_http_status.core.HttpServerInitializer;
 import ua.org.gostroy.netty_http_status.service.StatusInfoService;
 import ua.org.gostroy.netty_http_status.web.internal.Controller;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 
-import static io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
@@ -40,7 +34,7 @@ public class StatusController extends Controller {
 
 
         ClasspathResourceLoader classpathResourceLoader = new ClasspathResourceLoader();
-        InputStream inputStream = classpathResourceLoader.getResourceStream("/status.vm");
+        InputStream inputStream = classpathResourceLoader.getResourceStream(HttpServerInitializer.WEB_CONTENT_PATH + "/status.vm");
         Reader templateReader = new InputStreamReader(inputStream);
 
         StringWriter swOut = new StringWriter();

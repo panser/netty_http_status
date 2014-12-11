@@ -8,6 +8,7 @@ import io.netty.util.CharsetUtil;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+import ua.org.gostroy.netty_http_status.core.HttpServerInitializer;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,7 +31,7 @@ public class DefaultController extends Controller {
         try{
             VelocityContext context = new VelocityContext();
             ClasspathResourceLoader classpathResourceLoader = new ClasspathResourceLoader();
-            InputStream inputStream = classpathResourceLoader.getResourceStream(getUri());
+            InputStream inputStream = classpathResourceLoader.getResourceStream(HttpServerInitializer.WEB_CONTENT_PATH + getUri());
             Reader templateReader = new InputStreamReader(inputStream);
 
             StringWriter swOut = new StringWriter();

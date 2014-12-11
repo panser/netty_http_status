@@ -17,6 +17,7 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
     public static EntityManager em = Persistence.createEntityManagerFactory("netty").createEntityManager();
     public static RequestDao requestDao = new RequestDao();
     public static RequestService requestService = new RequestService();
+    public static final String WEB_CONTENT_PATH = "/web";
 
     private final SslContext sslCtx;
 
