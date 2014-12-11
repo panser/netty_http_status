@@ -40,7 +40,7 @@ public class StatusController extends Controller {
 
 
         ClasspathResourceLoader classpathResourceLoader = new ClasspathResourceLoader();
-        InputStream inputStream = classpathResourceLoader.getResourceStream("status.vm");
+        InputStream inputStream = classpathResourceLoader.getResourceStream("/status.vm");
         Reader templateReader = new InputStreamReader(inputStream);
 
         StringWriter swOut = new StringWriter();

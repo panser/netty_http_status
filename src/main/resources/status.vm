@@ -1,5 +1,6 @@
 <html>
     <head>
+        <link rel='stylesheet' type='text/css' href='/static/bootstrap-3.3.1-dist/css/bootstrap.css'>
         <title>Status page</title>
     </head>
 
