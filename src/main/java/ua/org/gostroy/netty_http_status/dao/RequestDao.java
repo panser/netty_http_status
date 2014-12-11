@@ -22,7 +22,9 @@ public class RequestDao {
     }
 
     public Request save(Request request){
+        em.getTransaction().begin();
         Request requestNew = em.merge(request);
+        em.getTransaction().commit();
         return requestNew;
     }
 

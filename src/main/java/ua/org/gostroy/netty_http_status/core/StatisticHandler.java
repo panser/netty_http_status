@@ -56,12 +56,6 @@ public class StatisticHandler extends ChannelTrafficShapingHandler {
             request.setRedirectUrl((redirectUrls != null) ? redirectUrls.get(0) : "");
         }
 
-        super.channelRead(ctx, msg);
-    }
-
-    @Override
-    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-
         request.setIp(((InetSocketAddress) ctx.channel().remoteAddress()).getAddress().getHostAddress());
         request.setTime(LocalDateTime.now());
         request.setTimestamp(System.currentTimeMillis() - startTime);
@@ -74,7 +68,7 @@ public class StatisticHandler extends ChannelTrafficShapingHandler {
 
         HttpServerInitializer.requestService.save(request);
 
-        super.channelUnregistered(ctx);
+        super.channelRead(ctx, msg);
     }
 
 }
