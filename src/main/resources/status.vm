@@ -4,8 +4,8 @@
     </head>
 
     <body>
-        <h3>Total Requests: </h3>
-        <h3>Unique Ip Requests: </h3>
+        <h3>Total Requests: ${countStatistic.totalRequest}</h3>
+        <h3>Unique Ip Requests: ${countStatistic.uniqRequest}</h3>
         <h3>Opened Connections: </h3>
 
         <h3>IP Statistics: </h3>
@@ -18,11 +18,13 @@
                 </tr>
             </thead>
             <tbody>
+                #foreach ($item in ${ipStatistics})
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>${item.ip}</td>
+                    <td>${item.count}</td>
+                    <td>${item.time}</td>
                 </tr>
+                #end
             </tbody>
         </table>
 
@@ -35,15 +37,17 @@
                 </tr>
             </thead>
             <tbody>
+                #foreach ($item in ${redirectStatistics})
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td>${item.redirectUrl}</td>
+                    <td>${item.count}</td>
                 </tr>
+                #end
             </tbody>
         </table>
 
 
-        <h3>Log: </h3>
+        <h3>Request Statistics: </h3>
         <table>
             <thead>
                 <tr>
@@ -56,14 +60,16 @@
                 </tr>
             </thead>
             <tbody>
+                #foreach ($item in ${redirectStatistics})
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>${item.ip}</td>
+                    <td>${item.uri}</td>
+                    <td>${item.timestamp}</td>
+                    <td>${item.sentBytes}</td>
+                    <td>${item.receivedBytes}</td>
+                    <td>${item.speed}</td>
                 </tr>
+                #end
             </tbody>
         </table>
 
