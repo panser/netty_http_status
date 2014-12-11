@@ -5,6 +5,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.util.CharsetUtil;
+import org.apache.commons.io.IOUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
@@ -29,18 +30,11 @@ public class DefaultController extends Controller {
         String page_content;
 
         try{
-            VelocityContext context = new VelocityContext();
-            ClasspathResourceLoader classpathResourceLoader = new ClasspathResourceLoader();
-            InputStream inputStream = classpathResourceLoader.getResourceStream(HttpServerInitializer.WEB_CONTENT_PATH + getUri());
-            Reader templateReader = new InputStreamReader(inputStream);
-
-            StringWriter swOut = new StringWriter();
-            Velocity.evaluate(context, swOut, "LOG", templateReader);
-            page_content = swOut.toString();
+            InputStream inputStream = this.getClass().getResourceAsStream(HttpServerInitializer.WEB_CONTENT_PATH + getUri());
+            page_content = IOUtils.toString(inputStream, "UTF-8");
         }catch (Exception e){
             page_content = CONTENT_NOT_FOUND;
         }
-
 
         ByteBuf CONTENT = Unpooled.unreleasableBuffer(Unpooled.copiedBuffer(page_content, CharsetUtil.UTF_8));
         FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, NOT_FOUND, CONTENT.duplicate());

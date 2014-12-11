@@ -18,6 +18,7 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
     public static RequestDao requestDao = new RequestDao();
     public static RequestService requestService = new RequestService();
     public static final String WEB_CONTENT_PATH = "/web";
+    public static String TEMPLATE_SUFFIX = ".vm";
 
     private final SslContext sslCtx;
 

@@ -33,8 +33,7 @@ public class StatusController extends Controller {
         context.put("requestStatistics", statusInfoService.findRequestStatistic(16));
 
 
-        ClasspathResourceLoader classpathResourceLoader = new ClasspathResourceLoader();
-        InputStream inputStream = classpathResourceLoader.getResourceStream(HttpServerInitializer.WEB_CONTENT_PATH + "/status.vm");
+        InputStream inputStream = this.getClass().getResourceAsStream(HttpServerInitializer.WEB_CONTENT_PATH + getUri() + HttpServerInitializer.TEMPLATE_SUFFIX);
         Reader templateReader = new InputStreamReader(inputStream);
 
         StringWriter swOut = new StringWriter();

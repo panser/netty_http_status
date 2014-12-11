@@ -27,12 +27,15 @@ public class ControllerFactory {
         controller.setUri(uri);
         if ("/hello".equals(uri)) {
             controller = HelloControllerHolder.HELLO_CONTROLLER;
+            controller.setUri(uri);
         }
         if (uri.startsWith("/redirect?url=")) {
             controller = RedirectControllerHolder.REDIRECT_CONTROLLER;
+            controller.setUri(uri);
         }
         if ("/status".equals(uri)) {
             controller = StatusControllerHolder.STATUS_CONTROLLER;
+            controller.setUri(uri);
         }
 
         return controller;
