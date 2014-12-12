@@ -77,7 +77,7 @@
                     <th>Timestamp(ms)</th>
                     <th>sent_bytes</th>
                     <th>received_bytes</th>
-                    <th>speed (bytes/sec))</th>
+                    <th>speed (bytes/sec)</th>
                 </tr>
             </thead>
             <tbody>
