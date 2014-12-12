@@ -14,7 +14,7 @@ import ua.org.gostroy.netty_http_status.model.entity.Request;
 import ua.org.gostroy.netty_http_status.server.handler.HttpServerHandler;
 import ua.org.gostroy.netty_http_status.server.handler.statistic.StatisticInHttpHandler;
 import ua.org.gostroy.netty_http_status.server.handler.statistic.StatisticInRawHandler;
-import ua.org.gostroy.netty_http_status.server.handler.statistic.StatisticOutRawHandler;
+import ua.org.gostroy.netty_http_status.server.handler.statistic.StatisticOutHttpHandler;
 import ua.org.gostroy.netty_http_status.service.RequestService;
 
 import javax.persistence.EntityManager;
@@ -42,13 +42,12 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
             p.addLast(sslCtx.newHandler(ch.alloc()));
         }
         p.addLast("statisticInRawHandler", new StatisticInRawHandler());
-        p.addLast("statisticOutRawHandler", new StatisticOutRawHandler());
         p.addLast(new HttpServerCodec());
         p.addLast( "http-aggregator", new HttpObjectAggregator( Integer.MAX_VALUE ) );
         p.addLast("statisticInHttpHandler", new StatisticInHttpHandler());
+        p.addLast("statisticOutHttpHandler", new StatisticOutHttpHandler());
         p.addLast("mainHandler", new HttpServerHandler());
 
-        Request request = new Request();
-        ch.attr(HttpServerInitializer.REQUEST_KEY).set(request);
+        ch.attr(HttpServerInitializer.REQUEST_KEY).set(new Request());
     }
 }

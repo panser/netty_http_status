@@ -21,7 +21,7 @@ public class RequestDao {
         this.em = em;
     }
 
-    public Request save(Request request){
+    public synchronized Request save(Request request){
         em.getTransaction().begin();
         Request requestNew = em.merge(request);
         em.getTransaction().commit();
