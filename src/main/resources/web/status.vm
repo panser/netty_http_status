@@ -24,7 +24,7 @@
                 <tr>
                     <td>${countStatistic.totalRequest}</td>
                     <td>${countStatistic.uniqRequest}</td>
-                    <td></td>
+                    <td>${connections}</td>
                 </tr>
             </tbody>
         </table>

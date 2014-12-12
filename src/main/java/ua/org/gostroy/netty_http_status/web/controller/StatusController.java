@@ -33,6 +33,7 @@ public class StatusController extends Controller {
         VelocityEngine engine = new VelocityEngine(properties);
 
         VelocityContext context = new VelocityContext();
+        context.put("connections", HttpServerInitializer.openConnections.get());
         context.put("countStatistic", statusInfoService.findCountStatistic());
         context.put("ipStatistics", statusInfoService.findIpStatistic());
         context.put("redirectStatistics", statusInfoService.findRedirectStatistic());

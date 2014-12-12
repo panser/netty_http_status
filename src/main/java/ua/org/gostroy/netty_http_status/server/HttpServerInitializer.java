@@ -19,6 +19,7 @@ import ua.org.gostroy.netty_http_status.service.RequestService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
 
@@ -27,6 +28,7 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
     public static RequestService requestService = new RequestService();
     public static final String WEB_CONTENT_PATH = "/web";
     public static String TEMPLATE_SUFFIX = ".vm";
+    public static AtomicLong openConnections = new AtomicLong(0);
     public static final AttributeKey<Request> REQUEST_KEY = AttributeKey.valueOf("requestKey");
 
     private final SslContext sslCtx;

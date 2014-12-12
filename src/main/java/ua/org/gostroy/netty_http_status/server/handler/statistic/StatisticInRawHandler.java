@@ -19,7 +19,7 @@ public class StatisticInRawHandler extends ChannelInboundHandlerAdapter {
         Request request = (Request) ctx.channel().attr(HttpServerInitializer.REQUEST_KEY).get();
 
         request.setIp(((InetSocketAddress) ctx.channel().remoteAddress()).getAddress().getHostAddress());
-
+        HttpServerInitializer.openConnections.incrementAndGet();
 
         super.channelActive(ctx);
     }
@@ -43,4 +43,12 @@ public class StatisticInRawHandler extends ChannelInboundHandlerAdapter {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         super.exceptionCaught(ctx, cause);
     }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+
+        HttpServerInitializer.openConnections.decrementAndGet();
+        super.channelInactive(ctx);
+    }
+
 }
