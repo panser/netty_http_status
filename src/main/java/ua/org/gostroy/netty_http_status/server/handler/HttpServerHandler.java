@@ -1,4 +1,4 @@
-package ua.org.gostroy.netty_http_status.core;
+package ua.org.gostroy.netty_http_status.server.handler;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;

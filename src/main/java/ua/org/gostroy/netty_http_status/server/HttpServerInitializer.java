@@ -1,16 +1,18 @@
-package ua.org.gostroy.netty_http_status.core;
+package ua.org.gostroy.netty_http_status.server;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
-import io.netty.handler.codec.http.HttpObjectDecoder;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.ssl.SslContext;
-import io.netty.handler.traffic.AbstractTrafficShapingHandler;
 import io.netty.util.AttributeKey;
 import ua.org.gostroy.netty_http_status.dao.RequestDao;
 import ua.org.gostroy.netty_http_status.model.entity.Request;
+import ua.org.gostroy.netty_http_status.server.handler.HttpServerHandler;
+import ua.org.gostroy.netty_http_status.server.handler.statistic.StatisticInHttpHandler;
+import ua.org.gostroy.netty_http_status.server.handler.statistic.StatisticInRawHandler;
+import ua.org.gostroy.netty_http_status.server.handler.statistic.StatisticOutRawHandler;
 import ua.org.gostroy.netty_http_status.service.RequestService;
 
 import javax.persistence.EntityManager;

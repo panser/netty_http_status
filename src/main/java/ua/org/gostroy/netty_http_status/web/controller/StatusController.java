@@ -7,10 +7,8 @@ import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.util.CharsetUtil;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
-import ua.org.gostroy.netty_http_status.core.HttpServerInitializer;
+import ua.org.gostroy.netty_http_status.server.HttpServerInitializer;
 import ua.org.gostroy.netty_http_status.service.StatusInfoService;
 import ua.org.gostroy.netty_http_status.web.internal.Controller;
 

@@ -1,6 +1,6 @@
 package ua.org.gostroy.netty_http_status.service;
 
-import ua.org.gostroy.netty_http_status.core.HttpServerInitializer;
+import ua.org.gostroy.netty_http_status.server.HttpServerInitializer;
 import ua.org.gostroy.netty_http_status.dao.RequestDao;
 import ua.org.gostroy.netty_http_status.model.entity.Request;
 

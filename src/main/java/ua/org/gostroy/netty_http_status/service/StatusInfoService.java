@@ -1,13 +1,12 @@
 package ua.org.gostroy.netty_http_status.service;
 
-import ua.org.gostroy.netty_http_status.core.HttpServerInitializer;
+import ua.org.gostroy.netty_http_status.server.HttpServerInitializer;
 import ua.org.gostroy.netty_http_status.dao.RequestDao;
 import ua.org.gostroy.netty_http_status.model.CountStatistic;
 import ua.org.gostroy.netty_http_status.model.IpStatistic;
 import ua.org.gostroy.netty_http_status.model.RedirectStatistic;
 import ua.org.gostroy.netty_http_status.model.RequestStatistic;
 
-import javax.persistence.Query;
 import java.util.List;
 
 /**

@@ -1,19 +1,12 @@
-package ua.org.gostroy.netty_http_status.core;
+package ua.org.gostroy.netty_http_status.server.handler.statistic;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
-import io.netty.handler.traffic.TrafficCounter;
-import io.netty.util.AttributeKey;
 import ua.org.gostroy.netty_http_status.model.entity.Request;
+import ua.org.gostroy.netty_http_status.server.HttpServerInitializer;
 
-import java.net.InetSocketAddress;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by Panov Sergey on 12/12/2014.

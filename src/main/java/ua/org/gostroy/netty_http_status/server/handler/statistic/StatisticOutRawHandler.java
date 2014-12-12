@@ -1,10 +1,11 @@
-package ua.org.gostroy.netty_http_status.core;
+package ua.org.gostroy.netty_http_status.server.handler.statistic;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
 import ua.org.gostroy.netty_http_status.model.entity.Request;
+import ua.org.gostroy.netty_http_status.server.HttpServerInitializer;
 
 /**
  * Created by Panov Sergey on 12/12/2014.
