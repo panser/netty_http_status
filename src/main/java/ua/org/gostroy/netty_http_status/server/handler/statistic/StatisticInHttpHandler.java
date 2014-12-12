@@ -16,7 +16,7 @@ public class StatisticInHttpHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        Request request = (Request) ctx.channel().attr(HttpServerInitializer.REQUEST_KEY).get();
+        Request request = ctx.channel().attr(HttpServerInitializer.REQUEST_KEY).get();
 
         if (msg instanceof FullHttpRequest) {
             FullHttpRequest req = (FullHttpRequest) msg;
