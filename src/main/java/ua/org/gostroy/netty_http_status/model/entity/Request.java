@@ -1,7 +1,12 @@
 package ua.org.gostroy.netty_http_status.model.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 /**
  * Created by Panov Sergey on 12/10/2014.
@@ -21,7 +26,7 @@ public class Request {
     private Long id;
     private String ip;
     private String uri = "";
-    private LocalDateTime time;
+    private Date time;
     private String redirectUrl = "";
     private Long receivedBytes = 0L;
     private Long sentBytes = 0L;
@@ -52,11 +57,11 @@ public class Request {
         this.uri = uri;
     }
 
-    public LocalDateTime getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
