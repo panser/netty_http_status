@@ -21,7 +21,7 @@ public class StatisticOutRawHandler extends ChannelOutboundHandlerAdapter {
         if (msg instanceof ByteBuf) {
             ByteBuf byteBuf = (ByteBuf) msg;
             int size = byteBuf.readableBytes();
-            request.setSentBytes((long) size + request.getSentBytes());
+            request.setSentBytes((long) size);
         }
 
         Long duration = System.currentTimeMillis() - request.getTime().getTime();
