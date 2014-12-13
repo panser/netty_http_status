@@ -12,7 +12,7 @@ import ua.org.gostroy.netty_http_status.server.HttpServerInitializer;
 import ua.org.gostroy.netty_http_status.service.StatusInfoService;
 import ua.org.gostroy.netty_http_status.web.internal.Controller;
 
-import java.io.*;
+import java.io.StringWriter;
 import java.util.Properties;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;

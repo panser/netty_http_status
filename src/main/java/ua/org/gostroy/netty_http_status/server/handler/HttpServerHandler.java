@@ -2,12 +2,15 @@ package ua.org.gostroy.netty_http_status.server.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.DefaultFullHttpResponse;
+import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpRequest;
 import ua.org.gostroy.netty_http_status.server.HttpServerInitializer;
 import ua.org.gostroy.netty_http_status.web.internal.Controller;
 import ua.org.gostroy.netty_http_status.web.internal.FrontController;
 
-import static io.netty.handler.codec.http.HttpResponseStatus.*;
+import static io.netty.handler.codec.http.HttpResponseStatus.CONTINUE;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 public class HttpServerHandler extends ChannelInboundHandlerAdapter {
@@ -31,9 +34,9 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
             Controller controller = frontController.getController(req);
             FullHttpResponse response = controller.getFullHttpResponse();
 
-            if("/hello".equals(req.getUri().toLowerCase())) {
+            if ("/hello".equals(req.getUri().toLowerCase())) {
                 frontController.sendResponse(ctx, req, response, 10);
-            }else{
+            } else {
                 frontController.sendResponse(ctx, req, response);
             }
         }
@@ -44,7 +47,6 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
         cause.printStackTrace();
         ctx.close();
     }
-
 
 
 }

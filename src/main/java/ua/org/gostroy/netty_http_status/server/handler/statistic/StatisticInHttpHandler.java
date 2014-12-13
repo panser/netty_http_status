@@ -2,7 +2,8 @@ package ua.org.gostroy.netty_http_status.server.handler.statistic;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.QueryStringDecoder;
 import ua.org.gostroy.netty_http_status.model.entity.Request;
 import ua.org.gostroy.netty_http_status.server.HttpServerInitializer;
 

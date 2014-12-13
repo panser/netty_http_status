@@ -21,32 +21,32 @@ public class RequestDao {
         this.em = em;
     }
 
-    public synchronized Request save(Request request){
+    public synchronized Request save(Request request) {
         em.getTransaction().begin();
         Request requestNew = em.merge(request);
         em.getTransaction().commit();
         return requestNew;
     }
 
-    public CountStatistic findCountStatistic(){
+    public CountStatistic findCountStatistic() {
         Query query = em.createNamedQuery("CountStatistic.find");
         CountStatistic countStatistic = (CountStatistic) query.getSingleResult();
         return countStatistic;
     }
 
-    public List<IpStatistic> findIpStatistic(){
+    public List<IpStatistic> findIpStatistic() {
         Query query = em.createNamedQuery("IpStatistic.findAll");
         List<IpStatistic> ipStatistics = (List<IpStatistic>) query.getResultList();
         return ipStatistics;
     }
 
-    public List<RedirectStatistic> findRedirectStatistic(){
+    public List<RedirectStatistic> findRedirectStatistic() {
         Query query = em.createNamedQuery("RedirectStatistic.findAll");
         List<RedirectStatistic> redirectStatistics = (List<RedirectStatistic>) query.getResultList();
         return redirectStatistics;
     }
 
-    public List<RequestStatistic> findRequestStatistic(Integer count){
+    public List<RequestStatistic> findRequestStatistic(Integer count) {
         Query query = em.createNamedQuery("RequestStatistic.findAll");
         query.setMaxResults(count);
         List<RequestStatistic> requestStatistics = (List<RequestStatistic>) query.getResultList();

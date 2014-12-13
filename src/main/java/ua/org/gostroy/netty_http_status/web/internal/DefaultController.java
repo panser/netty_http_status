@@ -26,11 +26,11 @@ public class DefaultController extends Controller {
     public FullHttpResponse getFullHttpResponse() {
         String page_content;
 
-        try{
+        try {
             InputStream inputStream = this.getClass().getResourceAsStream(HttpServerInitializer.WEB_CONTENT_PATH + getUri());
             page_content = IOUtils.toString(inputStream, "UTF-8");
             httpResponseStatus = OK;
-        }catch (Exception e){
+        } catch (Exception e) {
             page_content = CONTENT_NOT_FOUND;
         }
 

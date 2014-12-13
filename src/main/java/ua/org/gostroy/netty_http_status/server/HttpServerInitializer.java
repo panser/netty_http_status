@@ -2,12 +2,9 @@ package ua.org.gostroy.netty_http_status.server;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.codec.http.HttpContentCompressor;
 import io.netty.handler.codec.http.HttpObjectAggregator;
-import io.netty.handler.codec.http.HttpRequestDecoder;
-import io.netty.handler.codec.http.HttpRequestEncoder;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.ssl.SslContext;
 import io.netty.util.AttributeKey;
@@ -28,7 +25,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
 
-    public static EntityManager em = Persistence.createEntityManagerFactory("mysql").createEntityManager();
+    public static EntityManager em = Persistence.createEntityManagerFactory("h2").createEntityManager();
     public static RequestDao requestDao = new RequestDao();
     public static RequestService requestService = new RequestService();
     public static FrontController frontController = new FrontController();
@@ -52,7 +49,8 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
         }
         p.addLast("statisticInRawHandler", new StatisticInRawHandler());
         p.addLast(new HttpServerCodec());
-        p.addLast( "http-aggregator", new HttpObjectAggregator( 10 * 1024 * 1024 ) );
+        p.addLast("http-aggregator", new HttpObjectAggregator(10 * 1024 * 1024));
+        p.addLast(new HttpContentCompressor());
         p.addLast("statisticInHttpHandler", new StatisticInHttpHandler());
         p.addLast(dbGroup, "statisticOutHttpHandler", new StatisticOutHttpHandler());
         p.addLast("mainHandler", new HttpServerHandler());

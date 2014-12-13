@@ -10,16 +10,13 @@ import io.netty.util.HashedWheelTimer;
 import io.netty.util.Timeout;
 import io.netty.util.Timer;
 import io.netty.util.TimerTask;
-import javafx.scene.control.Control;
 import ua.org.gostroy.netty_http_status.web.controller.HelloController;
 import ua.org.gostroy.netty_http_status.web.controller.RedirectController;
 import ua.org.gostroy.netty_http_status.web.controller.StatusController;
 
 import java.util.concurrent.TimeUnit;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_LENGTH;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
+import static io.netty.handler.codec.http.HttpHeaders.Names.*;
 import static io.netty.handler.codec.http.HttpMethod.GET;
 import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
 import static io.netty.handler.codec.http.HttpResponseStatus.FORBIDDEN;
@@ -32,20 +29,23 @@ public class FrontController {
 
     private Timer timer = new HashedWheelTimer();
 
-    public static class HelloControllerHolder{
+    public static class HelloControllerHolder {
         public static final HelloController HELLO_CONTROLLER = new HelloController();
     }
-    public static class RedirectControllerHolder{
+
+    public static class RedirectControllerHolder {
         public static final RedirectController REDIRECT_CONTROLLER = new RedirectController();
     }
-    public static class StatusControllerHolder{
+
+    public static class StatusControllerHolder {
         public static final StatusController STATUS_CONTROLLER = new StatusController();
     }
-    public static class DefaultControllerHolder{
+
+    public static class DefaultControllerHolder {
         public static final DefaultController DEFAULT_CONTROLLER = new DefaultController();
     }
 
-    public Controller getController(HttpRequest req){
+    public Controller getController(HttpRequest req) {
         String uri = req.getUri().toLowerCase();
         Controller controller = DefaultControllerHolder.DEFAULT_CONTROLLER;
         controller.setUri(uri);
@@ -66,21 +66,20 @@ public class FrontController {
     }
 
 
-
-    public void sendResponse(ChannelHandlerContext ctx, HttpRequest req, FullHttpResponse response){
-        if(checkHttpRequest(ctx, req)){
+    public void sendResponse(ChannelHandlerContext ctx, HttpRequest req, FullHttpResponse response) {
+        if (checkHttpRequest(ctx, req)) {
             sendHttpResponse(ctx, req, response);
         }
     }
 
-    public void sendResponse(ChannelHandlerContext ctx, HttpRequest req, FullHttpResponse response, long delay){
-        if(checkHttpRequest(ctx, req)){
+    public void sendResponse(ChannelHandlerContext ctx, HttpRequest req, FullHttpResponse response, long delay) {
+        if (checkHttpRequest(ctx, req)) {
             timer.newTimeout(new AnswerWithDelay(ctx, req, response), delay, TimeUnit.SECONDS);
         }
     }
 
 
-    private boolean checkHttpRequest(ChannelHandlerContext ctx, HttpRequest req){
+    private boolean checkHttpRequest(ChannelHandlerContext ctx, HttpRequest req) {
         // Handle a bad request.
         if (!req.getDecoderResult().isSuccess()) {
             sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HTTP_1_1, BAD_REQUEST));

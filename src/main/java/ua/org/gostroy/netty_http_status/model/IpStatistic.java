@@ -1,6 +1,5 @@
 package ua.org.gostroy.netty_http_status.model;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**

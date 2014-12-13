@@ -30,7 +30,7 @@ public class StatisticInRawHandler extends ChannelInboundHandlerAdapter {
 
         request.setTime(new Date());
 
-        if(msg instanceof ByteBuf){
+        if (msg instanceof ByteBuf) {
             ByteBuf byteBuf = (ByteBuf) msg;
             int size = byteBuf.readableBytes();
             request.setReceivedBytes((long) size);
