@@ -31,62 +31,6 @@ public abstract class Controller {
 
     public abstract FullHttpResponse getFullHttpResponse();
 
-    public void sendResponse(FullHttpResponse response){
-        if(checkHttpRequest(ctx, req)){
-            sendHttpResponse(ctx, req, response);
-        }
-    }
-
-    protected boolean checkHttpRequest(ChannelHandlerContext ctx, HttpRequest req){
-        // Handle a bad request.
-        if (!req.getDecoderResult().isSuccess()) {
-            sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HTTP_1_1, BAD_REQUEST));
-            return false;
-        }
-
-        // Allow only GET methods.
-        if (req.getMethod() != GET) {
-            sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HTTP_1_1, FORBIDDEN));
-            return false;
-        }
-
-        return true;
-    }
-
-    private void sendHttpResponse(ChannelHandlerContext ctx, HttpRequest req, FullHttpResponse response) {
-
-        response.headers().set(CONTENT_TYPE, "text/html; charset=UTF-8");
-        response.headers().set(CONTENT_LENGTH, response.content().readableBytes());
-
-        boolean keepAlive = HttpHeaders.isKeepAlive(req);
-        if (!keepAlive) {
-            ctx.write(response).addListener(ChannelFutureListener.CLOSE);
-        } else {
-            response.headers().set(CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
-            ctx.write(response);
-        }
-    }
-
-    public class AnswerWithDelay implements TimerTask {
-        private ChannelHandlerContext ctx;
-        private HttpRequest req;
-        private FullHttpResponse response;
-
-        public AnswerWithDelay(ChannelHandlerContext ctx, HttpRequest req, FullHttpResponse response) {
-            this.ctx = ctx;
-            this.req = req;
-            this.response = response;
-        }
-
-        @Override
-        public void run(Timeout timeout) throws Exception {
-            sendHttpResponse(ctx, req, response);
-            ctx.flush();
-        }
-
-    }
-
-
     public String getUri() {
         return uri;
     }

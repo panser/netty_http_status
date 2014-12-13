@@ -30,10 +30,4 @@ public class HelloController extends Controller {
         return response;
     }
 
-    @Override
-    public void sendResponse(FullHttpResponse response) {
-        if(checkHttpRequest(getCtx(), getReq())){
-            timer.newTimeout(new AnswerWithDelay(getCtx(), getReq(), response), 10, TimeUnit.SECONDS);
-        }
-    }
 }

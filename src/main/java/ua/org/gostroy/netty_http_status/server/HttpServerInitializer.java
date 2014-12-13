@@ -20,6 +20,7 @@ import ua.org.gostroy.netty_http_status.server.handler.statistic.StatisticInHttp
 import ua.org.gostroy.netty_http_status.server.handler.statistic.StatisticInRawHandler;
 import ua.org.gostroy.netty_http_status.server.handler.statistic.StatisticOutHttpHandler;
 import ua.org.gostroy.netty_http_status.service.RequestService;
+import ua.org.gostroy.netty_http_status.web.internal.FrontController;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -30,6 +31,7 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
     public static EntityManager em = Persistence.createEntityManagerFactory("mysql").createEntityManager();
     public static RequestDao requestDao = new RequestDao();
     public static RequestService requestService = new RequestService();
+    public static FrontController frontController = new FrontController();
     public static final String WEB_CONTENT_PATH = "/web";
     public static String TEMPLATE_SUFFIX = ".vm";
     public static AtomicLong openConnections = new AtomicLong(0);
