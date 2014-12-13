@@ -2,6 +2,8 @@ package ua.org.gostroy.netty_http_status.server;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
@@ -9,6 +11,8 @@ import io.netty.handler.codec.http.HttpRequestEncoder;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.ssl.SslContext;
 import io.netty.util.AttributeKey;
+import io.netty.util.concurrent.DefaultEventExecutorGroup;
+import io.netty.util.concurrent.EventExecutorGroup;
 import ua.org.gostroy.netty_http_status.dao.RequestDao;
 import ua.org.gostroy.netty_http_status.model.entity.Request;
 import ua.org.gostroy.netty_http_status.server.handler.HttpServerHandler;
@@ -40,14 +44,15 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     public void initChannel(SocketChannel ch) {
         ChannelPipeline p = ch.pipeline();
+        EventExecutorGroup dbGroup = new DefaultEventExecutorGroup(50);
         if (sslCtx != null) {
             p.addLast(sslCtx.newHandler(ch.alloc()));
         }
         p.addLast("statisticInRawHandler", new StatisticInRawHandler());
         p.addLast(new HttpServerCodec());
-        p.addLast( "http-aggregator", new HttpObjectAggregator( Integer.MAX_VALUE ) );
+        p.addLast( "http-aggregator", new HttpObjectAggregator( 10 * 1024 * 1024 ) );
         p.addLast("statisticInHttpHandler", new StatisticInHttpHandler());
-        p.addLast("statisticOutHttpHandler", new StatisticOutHttpHandler());
+        p.addLast(dbGroup, "statisticOutHttpHandler", new StatisticOutHttpHandler());
         p.addLast("mainHandler", new HttpServerHandler());
 
         ch.attr(HttpServerInitializer.REQUEST_KEY).set(new Request());

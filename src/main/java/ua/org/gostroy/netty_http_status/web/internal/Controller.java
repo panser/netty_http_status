@@ -29,12 +29,29 @@ public abstract class Controller {
     private ChannelHandlerContext ctx;
     private HttpRequest req;
 
+    public abstract FullHttpResponse getFullHttpResponse();
+
     public void sendResponse(FullHttpResponse response){
         if(checkHttpRequest(ctx, req)){
             sendHttpResponse(ctx, req, response);
         }
     }
-    public abstract FullHttpResponse getFullHttpResponse();
+
+    protected boolean checkHttpRequest(ChannelHandlerContext ctx, HttpRequest req){
+        // Handle a bad request.
+        if (!req.getDecoderResult().isSuccess()) {
+            sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HTTP_1_1, BAD_REQUEST));
+            return false;
+        }
+
+        // Allow only GET methods.
+        if (req.getMethod() != GET) {
+            sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HTTP_1_1, FORBIDDEN));
+            return false;
+        }
+
+        return true;
+    }
 
     private void sendHttpResponse(ChannelHandlerContext ctx, HttpRequest req, FullHttpResponse response) {
 
@@ -67,23 +84,6 @@ public abstract class Controller {
             ctx.flush();
         }
 
-    }
-
-
-    protected boolean checkHttpRequest(ChannelHandlerContext ctx, HttpRequest req){
-        // Handle a bad request.
-        if (!req.getDecoderResult().isSuccess()) {
-            sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HTTP_1_1, BAD_REQUEST));
-            return false;
-        }
-
-        // Allow only GET methods.
-        if (req.getMethod() != GET) {
-            sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HTTP_1_1, FORBIDDEN));
-            return false;
-        }
-
-        return true;
     }
 
 
